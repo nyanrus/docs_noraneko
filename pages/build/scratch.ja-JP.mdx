@@ -1,0 +1,44 @@
+# スクラッチからビルドする方法
+
+NoranekoはFirefoxのビルド済みバイナリを用いて開発しています。
+このページでは、noraneko-runtimeのビルド済みバイナリの代わりに、Firefoxバイナリを用いるスクラッチからのビルド方法を説明します。
+
+## Noranekoの仕組み
+
+Firefoxでは大きく3つのリソースを用いてます。
+- コンパイルが必要なソースファイル（.cpp, .rsなど）
+- プレーンテキストファイル（.js, .xhtmlなど）
+- ビルドファイル（moz.build, jar.mnなど）
+
+Firefoxのビルドでは、コンパイルが必要なソースファイルをバイナリへコンパイルし、プレーンテキストファイルファイルをコピーし結果として出力しています。\
+この際、プレーンテキストファイルは各ファイル、各フォルダとしてビルドファイルに指定された方式でコピーされ、テキストとして変更できる形で配置されます。
+
+Noranekoでは、開発時にテキストファイルへ変更を加え、NoranekoのJSファイルなどを含むようにしています。
+- .xhtmlへの変更（NoranekoのJSファイルのimportのために）
+- .jsへの変更（Firefox規定の動作を変更するために）
+- chrome.manifestへの変更（Firefoxへ内部ファイルとして認識させるため）
+
+JSファイルへの変更は、Noraneko開発において`Inject`と呼ばれます。
+この変更に関しては、noraneko/scriptsをご参照ください。
+
+開発時に変更を加えているので、どのランタイムを使用しても基本的な機能は利用できます。\
+（他のRuntimeを使用する場合、noraneko-runtimeで独自に変更している.cppファイルなどのpatchは利用できません。）
+
+この際、Firefoxバイナリを使うことを前提とします。
+
+## バイナリの調達
+
+Firefoxでは、Artifactビルドというとても便利な機能を提供しています。\
+Noranekoのバイナリと同じように、バイナリをMozillaのサーバーからダウンロードする機能です。\
+この機能を使用する場合、gitのミラー（gecko-dev）ではなく、Mozilla Centralからgit-cinnabarなどを使用しクローンする必要があります。\
+[Firefox Source Docsの貢献リファレンス](https://firefox-source-docs.mozilla.org/contributing/contribution_quickref.html)をご確認ください。
+
+直接ビルドしたバイナリも使用することができます。\
+同じく、Firefox Source Docsをご確認ください。
+
+## Noranekoでの使用
+
+カスタムランタイムのルートをrootとする場合、`root/obj-*/dist/bin` (Windowsの場合、`root/obj-x86_64-pc-windows-msvc/dist/bin`)を`noraneko/_dist/bin`に配置します。
+いつものように、`pnpm dev`を実行すればOK！
+
+お疲れ様でした。

@@ -1,0 +1,22 @@
+# Hot Module Replacement
+
+Noranekoでは、ViteのHMRを使用しホットスワップを利用できます。\
+主にHMRを使用する場面はSolid.jsですが、Solid.js公式のHMR機能はXULを扱うには不安定なので、手動でHMRに対応していることを明示する必要があります。
+
+solid.jsの`render`関数の戻り値はrenderした要素、effectなどを掃除するcleanup関数です。
+
+```ts
+const cleanup = render(~~~);
+if (import.meta.hot) {
+  import.meta.hot.dispose(cleanup);
+  import.meta.hot.accept((m) => m?.initFoo());
+}
+```
+
+のように書いてください。\
+Viteがこの情報を拾い、HMRできるコードとして認識します。\
+HMRできるコードとして認識されたファイルでimportされているコードは変更時に自動的に、HMRできるコードまで遡りHMRを実行してくれます。
+
+例えば、foo.ts（import.meta.hotへ登録済み）でimportしているbar.tsを変更した場合、foo.tsのHMRとして扱われます。
+
+HMRに対応していないコードを変更した場合、reloadが掛かります。ブラウザは再起動されませんが、開いているページなどが飛ぶのでご注意ください。
