@@ -6,11 +6,13 @@ Noranekoでは、ViteのHMRを使用しホットスワップを利用できま�
 solid.jsの`render`関数の戻り値はrenderした要素、effectなどを掃除するcleanup関数です。
 
 ```ts
-const cleanup = render(~~~);
-if (import.meta.hot) {
-  import.meta.hot.dispose(cleanup);
-  import.meta.hot.accept((m) => m?.initFoo());
-}
+const cleanup = render(
+	Component,
+	document.querySelector<XULElement>("#browser"),
+	{hotCtx: import.meta.hot}
+);
+
+import.meta.hot?.accept((m) => m?.initFoo());
 ```
 
 のように書いてください。\
@@ -19,4 +21,4 @@ HMRできるコードとして認識されたファイルでimportされてい�
 
 例えば、foo.ts（import.meta.hotへ登録済み）でimportしているbar.tsを変更した場合、foo.tsのHMRとして扱われます。
 
-HMRに対応していないコードを変更した場合、reloadが掛かります。ブラウザは再起動されませんが、開いているページなどが飛ぶのでご注意ください。
+HMRに対応していないコードを変更した場合、reloadが掛かります。ブラウザは再起動されませんが、開いているページなどが飛ぶのでご注意ください。 
