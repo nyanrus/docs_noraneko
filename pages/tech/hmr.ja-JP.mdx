@@ -3,10 +3,9 @@
 Noranekoでは、ViteのHMRを使用しホットスワップを利用できます。\
 主にHMRを使用する場面はSolid.jsですが、Solid.js公式のHMR機能はXULを扱うには不安定なので、手動でHMRに対応していることを明示する必要があります。
 
-solid.jsの`render`関数の戻り値はrenderした要素、effectなどを掃除するcleanup関数です。
 
 ```ts
-const cleanup = render(
+render(
 	Component,
 	document.querySelector<XULElement>("#browser"),
 	{hotCtx: import.meta.hot}
