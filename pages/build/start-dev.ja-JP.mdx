@@ -10,8 +10,25 @@
 
 ## Windows
 
-1. zstdをインストールし、PATHに追加します。
-2. [noraneko-runtime Action](https://github.com/nyanrus/noraneko-runtime/actions/workflows/wrapper_windows_build.yml)で最後に成功したビルドアーティファクトをダウンロードします。
-3. そのzipファイルを解凍し、nora-win_x64-bin.tar.zstファイルをプロジェクトルートへ置きます。
-4. `pnpm dev`を実行します
-5. ブラウザが実行されます。ソースコードを変更した場合、リロードまたはブラウザの再起動が自動で行われます。
+1. [https://cli.github.com/] から `gh cli`をインストールします。
+2. [noraneko-runtime Action](https://github.com/nyanrus/noraneko-runtime/actions/workflows/wrapper_windows_build.yml)に行きます。
+3. 最後に成功したビルドに行き、URLのIDを確認します。
+   URLの数字のIDを`run_id`とします。
+   `Release`版がおすすめです。
+4. `gh run download -R nyanrus/noraneko-runtime -n noraneko-win-amd64-dev [run_id]`を実行します。
+5. `pnpm dev`を実行します。
+6. ブラウザが実行されます。ソースコードを変更した場合、`pnpm dev`の再実行をしてください。
+   ソースコードがHMRをサポートしている場合、再実行なしでコードの変更が反映されます。
+
+## GNU/Linux
+
+1. [https://cli.github.com/] から `gh cli`をインストールし、パッケージマネージャーから`lbzip2`をインストールします。
+2. [noraneko-runtime Action](https://github.com/nyanrus/noraneko-runtime/actions/workflows/wrapper_linux_build.yml)に行きます。
+3. 最後に成功したビルドに行き、URLのIDを確認します。
+   URLの数字のIDを`run_id`とします。
+4. `gh run download -R nyanrus/noraneko-runtime -n noraneko-linux-amd64-dev [run_id]`を実行します。
+5. `mkdir -p _dist/bin`を実行します。
+6. `tar --strip-components=1 -xvf ./noraneko-*.tar.bz2 -C _dist/bin`を実行します。
+7. Run `pnpm dev`を実行します。
+6. ブラウザが実行されます。ソースコードを変更した場合、`pnpm dev`の再実行をしてください。
+   ソースコードがHMRをサポートしている場合、再実行なしでコードの変更が反映されます。
