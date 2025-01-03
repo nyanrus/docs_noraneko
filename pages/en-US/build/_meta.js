@@ -1,4 +1,4 @@
-{
+export default {
   "start-dev": "How to Start Development",
   "scratch": "Build from Scratch"
 }

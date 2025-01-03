@@ -1,12 +1,24 @@
-export default {
+import { useConfig, type DocsThemeConfig } from 'nextra-theme-docs'
+
+const config: DocsThemeConfig = {
+  head: () => {
+    const config = useConfig();
+
+    const finalTitle = `${config.title} | Noraneko Docs`
+    return (
+      <>
+        <title>{finalTitle}</title>
+      </>
+    );
+  },
   logo: <span>Noraneko Docs</span>,
   project: {
     link: 'https://github.com/nyanrus/noraneko'
   },
   // ... other theme options
   i18n: [
-    { locale: 'en-US', text: 'English' },
-    { locale: "ja-JP", text: "日本語"}
+    { locale: 'en-US', name: 'English' },
+    { locale: "ja-JP", name: "日本語"}
   ],
   editLink: {
     component: null,
@@ -15,7 +27,7 @@ export default {
     content: null,
   },
   footer: {
-    text: (
+    content: (
       <span>
         MIT {new Date().getFullYear()} ©{' '}
         <a href="https://github.com/nyarus" target="_blank">
@@ -25,4 +37,5 @@ export default {
       </span>
     )
   }
-}
+} 
+export default config

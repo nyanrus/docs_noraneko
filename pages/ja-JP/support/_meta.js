@@ -1,3 +1,3 @@
-{
+export default {
   "support": "サポート"
 }

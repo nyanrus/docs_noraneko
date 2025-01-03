@@ -1,4 +1,4 @@
-{
+export default {
   "index": "紹介",
   "build": "ビルド",
   "tech": "技術",
